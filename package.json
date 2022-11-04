@@ -1,6 +1,6 @@
 {
   "name": "graphql-info-inspector",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A toolkit for working with GraphQLResolveInfo objects.",
   "keywords": [
     "graphql",
