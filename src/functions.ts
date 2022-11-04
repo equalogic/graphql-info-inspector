@@ -96,21 +96,19 @@ export function findFieldInSelection(
     }
 
     if (selectionNode.kind === 'InlineFragment' || selectionNode.kind === 'FragmentSpread') {
-      const selectionSet = getSelectionSetFromNode(selectionNode, fragments);
+      const fragmentSelectionSet = getSelectionSetFromNode(selectionNode, fragments);
 
-      if (selectionSet === undefined) {
-        break;
+      if (fragmentSelectionSet === undefined) {
+        continue;
       }
 
-      foundNode = findFieldInSelection(fieldName, selectionSet, fragments);
+      foundNode = findFieldInSelection(fieldName, fragmentSelectionSet, fragments);
 
-      break;
+      continue;
     }
 
     if (getNameFromNode(selectionNode) === fieldName) {
       foundNode = selectionNode;
-
-      break;
     }
   }
 
