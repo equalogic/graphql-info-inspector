@@ -1,8 +1,8 @@
 import { FragmentDefinitionNode, GraphQLResolveInfo, SelectionNode, SelectionSetNode } from 'graphql';
 
 /**
- * Returns the SelectionNode for referenced field if it was selected in the GraphQL query, or null if it's not found.
- * `fieldPath` can reference nested fields using dotted 'parentField.childField.grandchildField' notation.
+ * Returns the SelectionNode for the specified field if it was selected in the GraphQL query, or null if it's not found.
+ * The `fieldPath` can reference nested fields using dotted `parentField.childField.grandchildField` notation.
  */
 export function findSelectionNode(fieldPath: string, info: GraphQLResolveInfo): SelectionNode | null {
   const baseNode = info.fieldNodes.find(fieldNode => fieldNode.name.value === info.fieldName);
@@ -45,6 +45,14 @@ export function findSelectionNode(fieldPath: string, info: GraphQLResolveInfo): 
   }
 
   return fieldPathNodes[fieldPathNodes.length - 1];
+}
+
+/**
+ * Returns true if the specified field was selected in the GraphQL query, or false if it's not found.
+ * The `fieldPath` can reference nested fields using dotted `parentField.childField.grandchildField` notation.
+ */
+export function isFieldSelected(fieldPath: string, info: GraphQLResolveInfo): boolean {
+  return findSelectionNode(fieldPath, info) != null;
 }
 
 export function getNameFromNode(selectionNode: SelectionNode): string | null {
