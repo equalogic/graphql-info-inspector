@@ -1,7 +1,7 @@
 import { GraphQLResolveInfo, SelectionNode } from 'graphql';
 import { findSelectionNode } from './functions';
 
-export class GraphQLInformer {
+export class GraphQLInspection {
   public constructor(public readonly info: GraphQLResolveInfo) {}
 
   /**
