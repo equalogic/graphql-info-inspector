@@ -1,5 +1,5 @@
 {
-  "name": "graphql-informer",
+  "name": "graphql-info-inspector",
   "version": "0.0.1",
   "description": "A toolkit for working with GraphQLResolveInfo objects.",
   "keywords": [
@@ -14,10 +14,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/equalogic/graphql-informer",
+  "homepage": "https://github.com/equalogic/graphql-info-inspector",
   "repository": {
     "type": "git",
-    "url": "https://github.com/equalogic/graphql-informer.git"
+    "url": "https://github.com/equalogic/graphql-info-inspector.git"
   },
   "scripts": {
     "prebuild": "rimraf dist && npm run barrels:generate",
