@@ -58,17 +58,17 @@ import { isFieldSelected } from 'graphql-info-inspector';
 // Example resolver function for a "products" query in your GQL schema
 async function products(source: any, args: any, context: any, info: GraphQLResolveInfo): Promise<Product[]> {
   const products = await loadProducts();
-  
+
   if (isFieldSelected('image', info)) {
     // Client requested `products { image { ... } }` so we need to fetch that data somehow
     await loadImages(products);
   }
-  
+
   if (isFieldSelected('image.tags', info)) {
     // Client requested `products { image { tags: { ... } } }` so we need to fetch that data as well
     await loadImageTags(products);
   }
-  
+
   return products;
 }
 ```
@@ -89,19 +89,19 @@ import { GraphQLInspection } from 'graphql-info-inspector';
 // Example resolver function for a "products" query in your GQL schema
 async function products(source: any, args: any, context: any, info: GraphQLResolveInfo): Promise<Product[]> {
   const queryInspection = new GraphQLInspection(info);
-  
+
   const products = await loadProducts();
 
   if (queryInspection.has('image')) {
     // Client requested `products { image { ... } }` so we need to fetch that data somehow
     await loadImages(products);
   }
-  
+
   if (queryInspection.has('image.tags')) {
     // Client requested `products { image { tags: { ... } } }` so we need to fetch that data as well
     await loadImageTags(products);
   }
-  
+
   return products;
 }
 ```
