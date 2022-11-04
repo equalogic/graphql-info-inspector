@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/equalogic/graphql-info-inspector/raw/master/resources/logo@720w.png" width="720" height="420">
+  <img src="https://github.com/equalogic/graphql-info-inspector/raw/master/resources/logo@720w.png" width="720" height="309">
   <br>
   <br>
   <a href="https://npmjs.com/package/graphql-info-inspector">
