@@ -35,8 +35,8 @@ GraphQL servers commonly pass an `info` object to resolver functions. This `info
 [GraphQLResolveInfo](https://graphql.org/graphql-js/type/#graphqlobjecttype:~:text=type-,GraphQLResolveInfo,-%3D%20%7B),
 conveys to the resolver extensive detail about the client's query (starting from the point of resolution).
 
-It can be used to determine which fields the client selected to retrieve on the object being resolved to optimize your
-response. But the structure of `GraphQLResolveInfo` is complex.
+It can be used to optimize your response by determining which fields the client selected to retrieve on the object being
+resolved. But the structure of `GraphQLResolveInfo` is complex.
 
 `graphql-info-inspector` is a toolkit that helps to make the retrieval of information from `GraphQLResolveInfo` easier.
 
@@ -57,19 +57,20 @@ import { isFieldSelected } from 'graphql-info-inspector';
 
 // Example resolver function for a "products" query in your GQL schema
 async function products(source: any, args: any, context: any, info: GraphQLResolveInfo): Promise<Product[]> {
-  const products = await loadProducts();
+  let withImages: boolean = false;
+  let withImageTags: boolean = false;
 
   if (isFieldSelected('image', info)) {
-    // Client requested `products { image { ... } }` so we need to fetch that data somehow
-    await loadImages(products);
+    // Client requested `products { image { ... } }` so we need to fetch that data
+    withImages = true;
   }
 
   if (isFieldSelected('image.tags', info)) {
     // Client requested `products { image { tags: { ... } } }` so we need to fetch that data as well
-    await loadImageTags(products);
+    withImageTags = true;
   }
 
-  return products;
+  return await loadProducts({ withImages, withImageTags });
 }
 ```
 
@@ -90,19 +91,20 @@ import { GraphQLInspection } from 'graphql-info-inspector';
 async function products(source: any, args: any, context: any, info: GraphQLResolveInfo): Promise<Product[]> {
   const queryInspection = new GraphQLInspection(info);
 
-  const products = await loadProducts();
+  let withImages: boolean = false;
+  let withImageTags: boolean = false;
 
   if (queryInspection.has('image')) {
-    // Client requested `products { image { ... } }` so we need to fetch that data somehow
-    await loadImages(products);
+    // Client requested `products { image { ... } }` so we need to fetch that data
+    withImages = true;
   }
 
   if (queryInspection.has('image.tags')) {
     // Client requested `products { image { tags: { ... } } }` so we need to fetch that data as well
-    await loadImageTags(products);
+    withImageTags = true;
   }
 
-  return products;
+  return await loadProducts({ withImages, withImageTags });
 }
 ```
 
